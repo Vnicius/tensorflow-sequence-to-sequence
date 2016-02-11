@@ -1,5 +1,6 @@
 import sys
 from random import shuffle
+import time
 
 import tensorflow as tf
 from Seq2seq import Seq2seq
@@ -122,25 +123,32 @@ if __name__ == "__main__":
 
     # with tf.Session() as sess:
     #     sess.run(tf.global_variables_initializer())
+    start_train = time.strftime("%d/%m/%Y %H:%M:%S")
+    print("\033[94m"+"START TRAIN:", start_train, '\033[0m')
 
-    seq2seq.train(next_batches, 5000, 32)
+    seq2seq.train(next_batches, 101, 32)
         #print(src_dict.num2sentence(batch_src[4000]))
         ###########
-    saver = tf.train.Saver()
-    with tf.Session() as sess:
-        try:
-          saver.restore(sess, '.model/model.ckpt')
-          print('Restored...')
-        except:
-          pass
+    print("\033[92m"+"START TRAIN:", start_train, '\033[0m')
+    print("\033[92m"+"END TRAIN:", time.strftime("%d/%m/%Y %H:%M:%S"), '\033[0m')
+    
+    #pickle.dump(seq2seq, open('.pickle/seq2seq.pkl','wb'))
 
-        sess.run(tf.global_variables_initializer())
-        test = list(batch_src_it())
+    # saver = tf.train.Saver()
+    # with tf.Session() as sess:
+    #     try:
+    #       saver.restore(sess, '.model/model.ckpt')
+    #       print('Restored...')
+    #     except:
+    #       pass
+
+    #     sess.run(tf.global_variables_initializer())
+    #     test = list(batch_src_it())
  
-        print(list(src_dict.num2sentence(test)))
-        print("\nEsperado:", next(tgt_it))
-        print()
-        res = seq2seq.do_prediction(sess, [test])
+    #     print(list(src_dict.num2sentence(test)))
+    #     print("\nEsperado:", next(tgt_it))
+    #     print()
+    #     res = seq2seq.do_prediction(sess, [test])
 
-        print(list(tgt_dict.num2sentence([i[0] for i in res])))
+    #     print(list(tgt_dict.num2sentence([i[0] for i in res[0]])))
         

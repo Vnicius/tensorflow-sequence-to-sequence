@@ -4,6 +4,8 @@
 import tensorflow as tf
 import helpers
 
+import dill
+
 PAD = 0
 EOS = 1
 
@@ -37,6 +39,7 @@ class Seq2seq:
         self.encoder_inputs = tf.placeholder(shape=(None, None), dtype=tf.int32, name='encoder_inputs')
         self.decoder_inputs = tf.placeholder(shape=(None, None), dtype=tf.int32, name='decoder_inputs')
         self.decoder_targets = tf.placeholder(shape=(None, None), dtype=tf.int32, name='decoder_targets')
+        #self.prediction = tf.get_variable(shape=(None,None), dtype=tf.int32, initializer= tf.zeros_initializer, name='prediction')
       
     def _init_embeddings(self):
       embeddings = tf.Variable(tf.random_uniform([self.input_vocab_size, self.inputs_emb_size], -1.0, 1.0),
@@ -70,8 +73,9 @@ class Seq2seq:
 
       self.decoder_logits = tf.contrib.layers.linear(self.decoder_outputs,
                                                     self.output_vocab_size)
-      self.prediction = tf.argmax(self.decoder_logits, 2)
-    
+      #self.prediction = tf.argmax(self.decoder_logits, 2)
+      tf.add_to_collection('prediction', tf.argmax(self.decoder_logits, 2))
+
     def get_optimizer(self):
       cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(
         labels=tf.one_hot(self.decoder_targets, depth=self.output_vocab_size, dtype=tf.float32),
@@ -162,24 +166,15 @@ class Seq2seq:
                 #         if i >= 2:
                 #             break
                 #     print()
+
               if not epoch%100:
                  print('Época: ' + str(epoch))
+                 print('Loss:', str(l))
         except KeyboardInterrupt:
             print('training interrupted')
 
         print('Saving...')
         saver.save(sess, '.model/model.ckpt')
-      
-    def do_prediction(self, sess, sequence):
-      encoder_inputs_, _ = helpers.batch(sequence)
-      decoder_inputs_, _ = helpers.batch(
-          [[EOS] + (sequence) for sequence in sequence]
-      )
-
-      return(sess.run(self.prediction, feed_dict={
-        self.encoder_inputs: encoder_inputs_,
-        self.decoder_inputs: decoder_inputs_
-      }))
     
 if __name__ == '__main__':
   s2s = Seq2seq(10,10)
