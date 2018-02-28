@@ -1,0 +1,295 @@
+What is your name?
+Are you Deaf?
+Are you a student?
+What is your teacher's name?
+Do you understand her?
+Do you understand him?
+Who is he?
+Who is she?
+What is your name again?
+Is this yours?
+Are you a hearing person?
+Where are you learning sign?
+Why are you learning sign?
+Is he a student? 
+Is she a student?
+Are they learning sign language?
+Who is your teacher?
+Do you like learning sign language?
+Hey, what's your name?
+Are you married?
+Do you have children?
+How-many sisters do you have?
+What is your mom's name?
+Is your dad deaf?
+Where do you work?
+Where do you live?
+Are you divorced?
+How many brothers do you have?
+Is your sister single?
+Spell your dad's name slowly.
+Did you meet my brother?
+Where do you live?
+Do you have a sister?
+Is this yours?
+What city do you live in?
+Do you like learning sign?
+Is your house big?
+How many children do you have?
+How many bathrooms do you have in your house?
+Do you like your work?
+Do you think I sign well?
+Who is he?
+Where are you from?
+Do you live here?
+Is anyone in your family deaf?
+Is your house small?
+Do you want more children?
+Do you go to school?
+Do you need to go to the bathroom?
+Do you think I sign bad? 
+Do you need help learning sign language?
+What is your favorite color?
+Name something that is black and white.
+Do you like the color brown?
+Do you draw well?
+Are your parents divorced?
+Do you think that someday you will teach ASL?
+Is your chair green?
+How old are you?
+In what city do you live?
+How long have you lived there?
+Do you want to go home now?
+What color is your paper? 
+Have you ever lived in a big city?
+Do you like red cars?
+Are you going to school tomorrow?
+How many years have you lived here?
+Do you like to eat green apples?
+Do you like cookies and milk?
+How many cups of water do you drink daily?
+What is your favorite food?
+Are you hungry?
+Do you like to eat popcorn at the movies?
+Do you like to eat red apples?
+Does your sister like eggs?
+If you eat three hamburgers will you be full?
+Do you have a backpack?
+What color is your belt?
+When do you change clothes?
+Where should we put dirty clothes?
+Who in this room has glasses?
+Who has a hearing aid?
+Do you like doing laundry?
+Spell the word "pants".
+How many pairs of shoes do you have?
+What color are your socks?
+Do you think children should change their underwear everyday?
+Does your backpack have a zipper?
+Do you live in a basement apartment?
+Which do you prefer, taking a bath or taking a shower?
+What color is your couch?
+What color is that table?
+Would you rather cook using a stove or a microwave?
+What color is your fridge?
+Have you ever been in an ambulance?
+Why do deaf people tend to gather in the kitchen?
+Is there a window in your bedroom?
+How many bathrooms are there in your house?
+Do cats like to eat birds?
+Do fish like to eat bugs?
+What do dogs like to chase?
+Do you have a pet?
+Do some cats like water?
+Do you want a horse?
+Do you look like your father?
+Do birds like to eat fish?
+Do horses like to eat fish?
+Is your bedroom upstairs?
+Tell me how you feel.
+Do you think a cow would make a good pet?
+What is your favorite book?
+Do you always go to class on time?
+Do you have a cat and a dog?
+Is anyone in your family deaf?
+Are you going back home after class?
+Are you able to use the phone?
+Name a book that you think is wonderful.
+Is your bedroom a little bit dirty?
+Do you know how to make soup?
+You never eat candy?
+Do you have a new car?
+Would you rather have pizza or a hamburger?
+Do you like to meet new people?
+When do you feel anxious?
+Do you like to chat with deaf people?
+Do you like to learn new things?
+Do you work in the afternoon?
+Did you brush your teeth today?
+Do you think life is fair for all people?
+Do you shower everyday?
+How many hours are in a day?
+How many minutes are in an hour?
+How many days are in a month?
+How many months are in a year?
+Do you like Mondays?
+Why are Tuesday nights a good time to go to the movies? I'm going to a party Saturday night. Do you want to go with me?
+How many days are in a week?
+Which days are you in school?
+On which day do people go to church?
+How many times did you eat yesterday?
+Are you coming to school next week?
+Do you like to read research articles?
+Is your television close-captioned?
+Did your dad go to college?
+Are you attending Gallaudet?
+Do you want to be an interpreter?
+Do you think hard-of-hearing people should marry Deaf people or hearing people?
+When did you graduate high school?
+Do you think this class is hard?
+Why do Deaf college students sometimes use note-takers?
+Do you like to watch close-captioned movies?
+Do you like TRUE/FALSE tests?
+Do you like to write research papers?
+Why does the teacher flash the lights?
+Do you have a list of interpreters?
+How many did you miss on the previous test you took in this class?
+When did you graduate from college?
+Do you think this class is easy?
+Did you attend a residential school for the Deaf?
+Do you like cold weather?
+Does it snow here in the winter?
+Do you think it will freeze tonight?
+If you work, how many days of sick-leave do you get?
+Do you like warm cookies and milk?
+Do you like to sleep in?
+Do you like hot weather?
+Do you think bed rest will help when you are sick?
+What is your favorite time of year?
+Do you feel sick?
+Is your refrigerator full?
+Do you like cold pizza?
+What are you majoring in?
+Does you teacher have an aide?
+Do you use a babysitter?
+What is your boss's name?
+Do you like to cook?
+Was your grandpa a farmer?
+If your dad were divorced and re-married, what relationship would the new wife be to you?
+What is your neighbor's name?
+Do you have a picture of your family?
+Who is president of the United States?
+What does the sign "stepfather" mean?
+How many brothers-in-law do you have?
+How much should you tip a waitress?
+Do you like to read the newspaper?
+Which computer program or programs do you use?
+Do you wish you had your own secretary?
+Would you wait a half-hour if the teacher doesn't come?
+Do you have a doctor's appointment?
+Which do you like best, spring, summer, or fall?
+Who do you think makes a better teacher, a woman or a man?
+What did you do last weekend?
+How many pairs of shoes do you have?
+Who was the last child in your family?
+What is your last class today?
+Are you always late to class?
+Do you know where the center for the deaf is?
+Who does most of the cooking in your family?
+What class do you have next?
+Haven't you changed your hearing-aid battery yet?
+How often do you go to the library?
+Will you be graduating soon?
+Do you like bananas?
+Which do you prefer to drink, water, milk, pop, or beer?
+What did you have for breakfast?
+What did you have for dinner yesterday?
+Do you like a lot of salt on your French fries?
+How do you make French toast?
+How often do you often eat grapes?
+Do you like ketchup on your eggs?
+Do you want mustard on your hotdog?
+Would you like pancakes and sausage for breakfast tomorrow?
+Do you like pepper in your soup?
+Do you like pickles on your hamburger?
+Would you like soup and salad for lunch tomorrow?
+Do you have a bike?
+Have you been on a boat before?
+Do you want to build your own house?
+Do you think finding new addresses is easy?
+Have you ever been on an airplane before?
+What do you enjoy doing?
+Have you ever ridden a horse before?
+Do you wish you had your own helicopter?
+Do you have a motorcycle?
+Why do you practice signing?
+Are you looking for work?
+Is there a subway in your city?
+How many tickets did you get last year?
+Do you like to travel by train?
+Have you ever lost your ASL book?
+What scares you?
+Do you think school is boring?
+Do you think firemen are brave?
+Do you like to chat on the phone?
+Do you embarrass easily?
+What do you enjoy doing?
+Do you think most dogs are friendly or are they mean?
+When do you feel frustrated?
+When do you feel happy?
+Have you recently insulted anyone?
+Do you sometimes feel lonely?
+Why are you mad?
+Is your boyfriend the jealous type?
+What do you take pride in?
+Do you think the teacher is silly?
+Do you think cats are stuck up?
+Do you like surprise tests?
+Suppose you walk for four hours, would you be tired?
+Have you ever had a buzz-cut hair-style?
+Name someone who has curly hair.
+Who do you think is cute?
+Does your mom have brown eyes?
+Do you look like your dad?
+Is your sister fat?
+Do you like to fool people?
+What color is your brother's hair?
+Which do you think is prettier, long hair or short hair?
+Do you eat a lot, or do you eat a normal amount?
+Is your dad short?
+Is your grandpa skinny?
+Are old people weak?
+How many girls in this class have straight hair?
+Are most farmers strong?
+How tall are you?
+Does your dad have blue eyes?
+Do you think my shoes are ugly?
+Do you ride the bus to school?
+How often do you go to the dentist?
+How many jobs have you applied for previously?
+How often do you get your haircut?
+Do you keep pictures of your old boyfriends?
+Why are most postal employees thin?
+Who runs your house?
+Who is your supervisor?
+Why do bosses fire employees?
+Do you like to dance?
+Do you like to fish?
+Do you wish you were an attorney?
+What is your major in school or your line of work?
+Does your church send out missionaries?
+Was your dad in the Army?
+Does your house need painting?
+How many pages is your resume?
+Can you run your own business?
+Do you have your own office?
+Have you registered for school next year?
+Some Deaf receive Supplemental Security Income, why?
+What is your worst class?
+Does it have to be dark for you to sleep?
+Do you like gardening?
+How have you been doing?
+What do you not care about?
+Do you keep wet wipes in your car?
+Each week, how many meetings do you go to?
+When did you start learning how to sign?
