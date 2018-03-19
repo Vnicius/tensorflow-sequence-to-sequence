@@ -73,7 +73,7 @@ class Seq2seq:
       self.prediction = tf.argmax(self.decoder_logits, 2)
     
     def get_optimizer(self):
-      cross_entropy = tf.nn.softmax_cross_entropy_with_logits(
+      cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(
         labels=tf.one_hot(self.decoder_targets, depth=self.output_vocab_size, dtype=tf.float32),
         logits=self.decoder_logits
       )
@@ -89,12 +89,13 @@ class Seq2seq:
       self._encoder()
       self._decoder()
     
-    def train(self, batches, epochs):
+    def train(self, batches, epochs, batch_per_epoch):
       # batches = batches = helpers.random_sequences(length_from=3, length_to=8,
       #                              vocab_lower=2, vocab_upper=10,
       #                              batch_size=batch_size)
       self.build_model()
       loss, train_op = self.get_optimizer()
+      saver = tf.train.Saver()
 
       # def next_feed(encoder_inputs=self.encoder_inputs,
       #               decoder_inputs=self.decoder_inputs,
@@ -118,13 +119,10 @@ class Seq2seq:
                     decoder_targets=self.decoder_targets):
         
         src_batch, tgt_batch = batches()
-        encoder_inputs_, _ = helpers.batch(src_batch, 50)
-        decoder_targets_, _ = helpers.batch(
-            [(sequence) + [EOS] for sequence in tgt_batch]
-        ,50)
-        decoder_inputs_, _ = helpers.batch(
-            [[EOS] + (sequence) for sequence in src_batch]
-        ,50)
+        input_batch, output_batch = helpers.batch_in_out(src_batch, [(sequence) + [EOS] for sequence in tgt_batch])
+        encoder_inputs_ = input_batch
+        decoder_targets_ = output_batch
+        decoder_inputs_= [[EOS] + (sequence) for sequence in input_batch]
         return {
             encoder_inputs: encoder_inputs_,
             decoder_inputs: decoder_inputs_,
@@ -133,6 +131,12 @@ class Seq2seq:
       
       with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
+        
+        try:
+          saver.restore(sess, '.model/model.ckpt')
+          print('Restored...')
+        except:
+          pass
 
         # max_batches = 5001
         # batches_in_epoch = 1000
@@ -140,11 +144,11 @@ class Seq2seq:
 
         try:
             for epoch in range(epochs):
+              for batch in range(batch_per_epoch):
                 fd = next_feed()
                 _, l = sess.run([train_op, loss], feed_dict=fd)
                 loss_track.append(l)
 
-                print('Época: ' + str(epoch))
 
                 # if batch == 0 or batch % batches_in_epoch == 0:
                 #     print('batch {}'.format(batch))
@@ -158,8 +162,13 @@ class Seq2seq:
                 #         if i >= 2:
                 #             break
                 #     print()
+              if not epoch%100:
+                 print('Época: ' + str(epoch))
         except KeyboardInterrupt:
             print('training interrupted')
+
+        print('Saving...')
+        saver.save(sess, '.model/model.ckpt')
       
     def do_prediction(self, sess, sequence):
       encoder_inputs_, _ = helpers.batch(sequence)
