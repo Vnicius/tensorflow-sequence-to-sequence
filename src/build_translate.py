@@ -33,14 +33,14 @@ class ReadFileIterator:
 
 if __name__ == "__main__":
     
-    # src_file_path = './.data/europarl-v7.pt-en.en'
-    # tgt_file_path = './.data/europarl-v7.pt-en.pt'
+    src_file_path = './.data/europarl-v7.pt-en.en'
+    tgt_file_path = './.data/europarl-v7.pt-en.pt'
 
     # src_file_path = './europarl-v7.pt-en.en.trunc'
     # tgt_file_path = './europarl-v7.pt-en.pt.trunc'
 
-    src_file_path = './ingles.txt'
-    tgt_file_path = './asl.txt'
+    # src_file_path = './ingles.txt'
+    # tgt_file_path = './asl.txt'
 
     #data_src, data_tgt = gen(100100)
 
@@ -65,8 +65,6 @@ if __name__ == "__main__":
         tgt_dict = Dictionary(tgt_file_path, lambda text: word_tokenize(text, 'portuguese'))
         tgt_dict.build_dictionary()
         pickle.dump(tgt_dict, open(".pickle/" + sys.argv[2] + ".pkl", "wb"))
-
-        print(tgt_dict.num2word_dict[5])
 
     batch_src_it = None
     batch_tgt_it = None
@@ -111,11 +109,11 @@ if __name__ == "__main__":
     #                 for line in tgt_file)
 
     def next_batches():
-        src = [list(batch_src_it()) for _ in range(batch_size)]
-        tgt = [list(batch_tgt_it()) for _ in range(batch_size)]
+        batches = [[list(batch_src_it()), list(batch_tgt_it())] for _ in range(batch_size)]
 
-        shuffle(src)
-        shuffle(tgt)
+        shuffle(batches)
+        src = [batch[0] for batch in batches]
+        tgt = [batch[1] for batch in batches]
 
         return src,tgt
     
@@ -125,7 +123,7 @@ if __name__ == "__main__":
     # with tf.Session() as sess:
     #     sess.run(tf.global_variables_initializer())
 
-    seq2seq.train(next_batches, 3000, 50)
+    seq2seq.train(next_batches, 5000, 32)
         #print(src_dict.num2sentence(batch_src[4000]))
         ###########
     saver = tf.train.Saver()
@@ -137,9 +135,12 @@ if __name__ == "__main__":
           pass
 
         sess.run(tf.global_variables_initializer())
-        test = list(next(batch_src_it))
+        test = list(batch_src_it())
+ 
         print(list(src_dict.num2sentence(test)))
+        print("\nEsperado:", next(tgt_it))
         print()
         res = seq2seq.do_prediction(sess, [test])
 
         print(list(tgt_dict.num2sentence([i[0] for i in res])))
+        
