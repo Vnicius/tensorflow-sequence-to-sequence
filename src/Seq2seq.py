@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 # -*- coding : uft-8
 
+import statistics
+
 import tensorflow as tf
 import helpers
 
 import dill
+import matplotlib.pyplot as plt
 
 PAD = 0
 EOS = 1
@@ -36,10 +39,10 @@ class Seq2seq:
       self.prediction = None
 
     def _init_placeholders(self):
-        self.encoder_inputs = tf.placeholder(shape=(None, None), dtype=tf.int32, name='encoder_inputs')
-        self.decoder_inputs = tf.placeholder(shape=(None, None), dtype=tf.int32, name='decoder_inputs')
-        self.decoder_targets = tf.placeholder(shape=(None, None), dtype=tf.int32, name='decoder_targets')
-        #self.prediction = tf.get_variable(shape=(None,None), dtype=tf.int32, initializer= tf.zeros_initializer, name='prediction')
+        self.encoder_inputs = tf.placeholder(shape=(None, None), dtype=tf.int64, name='encoder_inputs')
+        self.decoder_inputs = tf.placeholder(shape=(None, None), dtype=tf.int64, name='decoder_inputs')
+        self.decoder_targets = tf.placeholder(shape=(None, None), dtype=tf.int64, name='decoder_targets')
+        #self.prediction = tf.get_variable(shape=(None,None), dtype=tf.int64, initializer= tf.zeros_initializer, name='prediction')
       
     def _init_embeddings(self):
       embeddings = tf.Variable(tf.random_uniform([self.input_vocab_size, self.inputs_emb_size], -1.0, 1.0),
@@ -93,7 +96,7 @@ class Seq2seq:
       self._encoder()
       self._decoder()
     
-    def train(self, batches, epochs, batch_per_epoch):
+    def train(self, batches, validation_batches, epochs, batch_peer_epoch, valid_size):
       # batches = batches = helpers.random_sequences(length_from=3, length_to=8,
       #                              vocab_lower=2, vocab_upper=10,
       #                              batch_size=batch_size)
@@ -118,11 +121,12 @@ class Seq2seq:
       #       decoder_targets: decoder_targets_,
       #   }
 
-      def next_feed(encoder_inputs=self.encoder_inputs,
+      def next_feed(batches_func,
+                    encoder_inputs=self.encoder_inputs,
                     decoder_inputs=self.decoder_inputs,
                     decoder_targets=self.decoder_targets):
         
-        src_batch, tgt_batch = batches()
+        src_batch, tgt_batch = batches_func()
         input_batch, output_batch = helpers.batch_in_out(src_batch, [(sequence) + [EOS] for sequence in tgt_batch])
         encoder_inputs_ = input_batch
         decoder_targets_ = output_batch
@@ -145,14 +149,15 @@ class Seq2seq:
         # max_batches = 5001
         # batches_in_epoch = 1000
         loss_track = []
-
+        acc_track = []
         try:
             for epoch in range(epochs):
-              for batch in range(batch_per_epoch):
-                fd = next_feed()
+              loss_track_epoch = []
+              for batch in range(batch_peer_epoch):
+                fd = next_feed(batches_func=batches)
                 _, l = sess.run([train_op, loss], feed_dict=fd)
-                loss_track.append(l)
-
+                #loss_track.append(l)
+                loss_track_epoch.append(l)
 
                 # if batch == 0 or batch % batches_in_epoch == 0:
                 #     print('batch {}'.format(batch))
@@ -166,15 +171,45 @@ class Seq2seq:
                 #         if i >= 2:
                 #             break
                 #     print()
+                if not batch%100:
+                  print()
+                  print('Época:', str(epoch))
+                  print('Minibatch:', str(batch))
+                  print('Loss:', l)
 
-              if not epoch%100:
-                 print('Época: ' + str(epoch))
-                 print('Loss:', str(l))
+              print()
+              print('\33[1m','Época: ' + str(epoch))
+              print('Média de erro de época:', statistics.median(loss_track_epoch),'\33[0m')
+
+              loss_track.append(statistics.median(loss_track_epoch))
+
+              acc_track_epoch = []
+              for _ in range(valid_size):
+                correct = tf.equal(tf.argmax(tf.get_collection('prediction'), 1), self.decoder_targets)
+                acc = tf.reduce_mean(tf.cast(correct, 'float'))
+
+                fd = next_feed(validation_batches)
+
+                acc_track.append(acc.eval(fd))
+              
+              acc_track.append(statistics.median(acc_track_epoch))
+              print('Média de erro de validação:', statistics.median(acc_track_epoch))
+                
+
         except KeyboardInterrupt:
             print('training interrupted')
 
         print('Saving...')
         saver.save(sess, '.model/model.ckpt')
+        
+        plt.plot(loss_track)
+        plt.suptitle('Loss')
+        plt.savefig('loss.png')
+        plt.clf()
+
+        plt.plot(acc_track)
+        plt.suptitle('Validação')
+        plt.savefig('acc.png')
     
 if __name__ == '__main__':
   s2s = Seq2seq(10,10)

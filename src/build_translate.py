@@ -13,22 +13,22 @@ import dill as pickle
 #         [list(next(batch_tgt_it)) for _ in range(batch_size)]
 
 class ReadFileIterator:
-    def __init__(self, file_path):
-        self.i = 0
+    def __init__(self, file_path, start=0, end=0):
         self.lines = open(file_path, 'r').readlines()
-        self.n = len(self.lines)
-    
+        self.start = 0 if not start else int(start * len(self.lines))
+        self.end = len(self.lines) if not end else int(end * len(self.lines))
+
     def __inter__(self):
         return self
     
     def __next__(self):
         index = 0
         
-        if self.i < self.n:
-            index = self.i
-            self.i += 1
+        if self.start < self.end:
+            index = self.start
+            self.start += 1
         else:
-            self.i = 0
+            self.start = 0 if not start else int(start * len(self.lines))
 
         return self.lines[index]
 
@@ -70,8 +70,11 @@ if __name__ == "__main__":
     batch_src_it = None
     batch_tgt_it = None
 
-    src_it = ReadFileIterator(src_file_path)
-    tgt_it = ReadFileIterator(tgt_file_path)
+    src_it = ReadFileIterator(src_file_path, end=0.8)
+    tgt_it = ReadFileIterator(tgt_file_path, end=0.8)
+
+    valid_src_it = ReadFileIterator(src_file_path, start=0.8, end=0.9)
+    valid_tgt_it = ReadFileIterator(tgt_file_path, start=0.8, end=0.9)
 
     print("Criando batches da origem")
     # with open(src_file_path, 'r') as src_file:
@@ -79,7 +82,9 @@ if __name__ == "__main__":
     #         line = line.replace('\n', '')
     #         batch_src.append(src_dict.sentence2num(line))
 
-    batch_src_it = lambda : src_dict.sentence2num(next(src_it).replace('\n', ''))
+    #batch_src_it = lambda  : src_dict.sentence2num(next(src_it).replace('\n', ''))
+
+    batch_it = lambda it : src_dict.sentence2num(next(it).replace('\n', ''))
 
     print("Criando bathches do objetivo")
     # with open(tgt_file_path, 'r') as tgt_file:
@@ -88,13 +93,13 @@ if __name__ == "__main__":
     #         batch_tgt.append(tgt_dict.sentence2num(line))
 
 
-    batch_tgt_it = lambda : tgt_dict.sentence2num(next(tgt_it).replace('\n', ''))
+    #batch_tgt_it = lambda : tgt_dict.sentence2num(next(tgt_it).replace('\n', ''))
     
     #batches = get_batch(2, batch_src_it, batch_tgt_it)
 
     #x, y = next(batches)
 
-    batch_size = 16
+    batch_size = 25
 
     # def resetIt(src_file, tgt_file):
     #     src_file.close()
@@ -110,13 +115,19 @@ if __name__ == "__main__":
     #                 for line in tgt_file)
 
     def next_batches():
-        batches = [[list(batch_src_it()), list(batch_tgt_it())] for _ in range(batch_size)]
+        batches = [[list(batch_it(src_it)), list(batch_it(tgt_it))] for _ in range(batch_size)]
 
         shuffle(batches)
         src = [batch[0] for batch in batches]
         tgt = [batch[1] for batch in batches]
 
         return src,tgt
+    
+    def validation_batches():
+        src = [list(batch_it(valid_src_it)) for _ in range(batch_size)]
+        tgt = [list(batch_it(valid_tgt_it)) for _ in range(batch_size)]
+
+        return src, tgt
     
     seq2seq = Seq2seq(len(src_dict.word2num_dict),len(tgt_dict.word2num_dict),
                       32, 256, 256)
@@ -126,7 +137,9 @@ if __name__ == "__main__":
     start_train = time.strftime("%d/%m/%Y %H:%M:%S")
     print("\033[94m"+"START TRAIN:", start_train, '\033[0m')
 
-    seq2seq.train(next_batches, 101, 32)
+    seq2seq.train(next_batches, validation_batches, 100,
+                  int(src_it.end - src_it.start/batch_size),
+                  int(valid_src_it.end - valid_src_it.start))
         #print(src_dict.num2sentence(batch_src[4000]))
         ###########
     print("\033[92m"+"START TRAIN:", start_train, '\033[0m')
